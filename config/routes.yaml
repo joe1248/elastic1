@@ -1,0 +1,8 @@
+index:
+    path: /
+    controller: App\Controller\DashboardController::dashboard
+
+PublishersList:
+    path: /publishers/list
+    controller: App\Controller\PublisherController::getAll
+    
