@@ -1,8 +1,16 @@
 index:
-    path: /
+    path: /ok
     controller: App\Controller\DashboardController::dashboard
 
-PublishersList:
+# -----------  Publishers routes ----------------------------
+
+
+PublishersListRoute:
+    methods: [GET]
     path: /publishers/list
     controller: App\Controller\PublisherController::getAll
-    
+
+PublisherViewRoute:
+    methods: [GET]
+    path: /publishers/{id}
+    controller: App\Controller\PublisherController::getOne
