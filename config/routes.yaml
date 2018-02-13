@@ -1,5 +1,5 @@
 index:
-    path: /ok
+    path: /
     controller: App\Controller\DashboardController::dashboard
 
 # -----------  Publishers routes ----------------------------

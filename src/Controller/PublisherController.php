@@ -2,34 +2,34 @@
 
 namespace App\Controller;
 
+use App\Business\PublisherService;
 use App\Entity\Publisher;
+use App\Repository\PublisherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+
 
 class PublisherController extends Controller
 {
     /**
      * List all publishers non-deleted
      *
+     * @param PublisherService $publisherService
+     *
      * @return JsonResponse
      */
-    public function getAll(): JsonResponse
-    {        
-        /** @var PublishersRepo $publishersRepo */
-        $publishersRepo = $this->getDoctrine()->getRepository(Publisher::class);
+    public function getAll(PublisherService $publisherService): JsonResponse
+    {
+        /** @var PublisherRepository $publisherRepository */
+        $publisherRepository = $this->getDoctrine()->getRepository(Publisher::class);
 
-        /** @var Publisher[] $publishers */
-		$publishers = $publishersRepo->findBy(['deleted' => false]);
-		
-		/** @var array */
-		$publishers = array_map(function($pub){return $pub->getAttributes();}, $publishers);
-		
-        return new JsonResponse($publishers);
+        return new JsonResponse($publisherService->getAllNonDeleted($publisherRepository));
     }
-	
+
     /**
      * Return one publisher by ID
+     *
+     * @param Publisher $publisher
      *
      * @return JsonResponse
      */

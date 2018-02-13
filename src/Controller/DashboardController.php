@@ -9,7 +9,7 @@ class DashboardController
 	public function dashboard()
 	{
 		return new Response(
-			'<html><body>Lucky number: ???</body></html>'
+			'<html><body>Lucky number: OKOK???</body></html>'
 		);
 	}
 }
