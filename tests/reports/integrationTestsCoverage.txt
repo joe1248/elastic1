@@ -1,0 +1,12 @@
+
+
+Code Coverage Report:   
+  2018-02-14 20:03:38   
+                        
+ Summary:               
+  Classes:  0.00% (0/5) 
+  Methods: 12.50% (1/8) 
+  Lines:    9.09% (7/77)
+
+\App\Controller::App\Controller\PublisherController
+  Methods:  50.00% ( 1/ 2)   Lines:  77.78% (  7/  9)

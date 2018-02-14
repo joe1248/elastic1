@@ -49,4 +49,23 @@ class PublisherControllerTest extends WebTestCase
             $publishers[19]
         );
     }
+
+    public function testGetOne()
+    {
+        $id5 = $this->fixtures->getReference('publisher5')->getId();
+
+        $client = $this->makeClient(true);
+        $client->request('GET', '/publishers/' . $id5);
+
+        $this->assertStatusCode(200, $client);
+        $publisher = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals(
+            [
+                'id' => $id5,
+                'name' => 'Ohitolejaluoopii'
+            ],
+            $publisher
+        );
+    }
 }

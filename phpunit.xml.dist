@@ -16,20 +16,20 @@
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
-        <env name="DATABASE_URL" value="mysql://elastic_testuser:qISZD8yaEppn@foreignkeywizard.com:3306/elastic1_test" />
+        <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/app.db" />
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="all">
             <directory>tests/</directory>
         </testsuite>
+        <testsuite name="unit">
+            <directory>tests/UnitTests/</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>tests/IntegrationTests/</directory>
+        </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./src/</directory>
-        </whitelist>
-    </filter>
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
