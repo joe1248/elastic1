@@ -4,7 +4,6 @@ index:
 
 # -----------  Publishers routes ----------------------------
 
-
 PublishersListRoute:
     methods: [GET]
     path: /publishers/list
@@ -14,3 +13,15 @@ PublisherViewRoute:
     methods: [GET]
     path: /publishers/{id}
     controller: App\Controller\PublisherController::getOne
+
+# -----------  Authors routes ----------------------------
+
+AuthorsListRoute:
+    methods: [GET]
+    path: /authors/list
+    controller: App\Controller\AuthorController::getAll
+
+AuthorViewRoute:
+    methods: [GET]
+    path: /authors/{id}
+    controller: App\Controller\AuthorController::getOne
