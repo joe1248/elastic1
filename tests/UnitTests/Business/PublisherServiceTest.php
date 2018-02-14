@@ -16,13 +16,16 @@ class PublisherServiceTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @var Publisher $publisher1 */
+        $publisher1 = new Publisher(['id' => 1, 'name' => 'PublisherOne', 'deleted' => false]);
+        /** @var Publisher $publisher2 */
+        $publisher2 = new Publisher(['id' => 2, 'name' => 'PublisherTwo', 'deleted' => false]);
+        $this->assertEquals(1, $publisher1->getId());
+
         $publisherRepositoryMock->expects($this->once())
             ->method('findBy')
             ->with($this->equalTo(['deleted' => false]))
-            ->willReturn([
-                new Publisher(['id' => 1, 'name' => 'PublisherOne', 'deleted' => false]),
-                new Publisher(['id' => 2, 'name' => 'PublisherTwo', 'deleted' => false]),
-            ]);
+            ->willReturn([$publisher1, $publisher2]);
 
         /** PublisherService $publisherServiceToTest */
         $publisherServiceToTest = new PublisherService();

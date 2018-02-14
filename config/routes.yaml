@@ -30,7 +30,7 @@ AuthorViewRoute:
 
 # -----------  Books routes ----------------------------
 
-BooksHighligthedRoute:
+BooksHighlightedRoute:
     methods: [GET]
     path: /books/highlighted/{offset}/{limit}
     controller: App\Controller\BookController::getAllFeatured
@@ -40,3 +40,10 @@ BookViewRoute:
     methods: [GET]
     path: /books/{id}
     controller: App\Controller\BookController::getOne
+
+BooksSearchRoute:
+    methods: [GET]
+    path: /books/search/{searched}/{offset}/{limit}
+    controller: App\Controller\BookController::searchByTitle
+    defaults:   { offset: 0, limit: 50 }
+

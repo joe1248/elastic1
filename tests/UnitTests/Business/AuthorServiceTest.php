@@ -16,13 +16,16 @@ class AuthorServiceTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @var Author $author1 */
+        $author1 = new Author(['id' => 1, 'first_name' => 'Mike', 'last_name' => 'Beans', 'deleted' => false]);
+        /** @var Author $author2 */
+        $author2 = new Author(['id' => 2, 'first_name' => 'John', 'last_name' => 'Smith', 'deleted' => false]);
+        $this->assertEquals(1, $author1->getId());
+
         $authorRepositoryMock->expects($this->once())
             ->method('findBy')
             ->with($this->equalTo(['deleted' => false]))
-            ->willReturn([
-                new Author(['id' => 1, 'first_name' => 'Mike', 'last_name' => 'Beans', 'deleted' => false]),
-                new Author(['id' => 2, 'first_name' => 'John', 'last_name' => 'Smith', 'deleted' => false]),
-            ]);
+            ->willReturn([$author1, $author2]);
 
         /** AuthorService $authorServiceToTest */
         $authorServiceToTest = new AuthorService();

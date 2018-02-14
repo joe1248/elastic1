@@ -4,6 +4,7 @@ namespace App\Business;
 
 use App\Entity\Book;
 use App\Repository\BookRepository;
+use App\Repository\RepositoryHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class BookService
@@ -23,7 +24,7 @@ class BookService
     {
         /** @var Book[] $books */
         $books = $bookRepository->findBy([
-            //'featured' => true,
+            'featured' => true,
             'deleted' => false
         ],
             null,
@@ -46,10 +47,43 @@ class BookService
     {
         /** @var Book[] $books */
         $books = $bookRepository->findBy([
-            //'featured' => true,
+            'featured' => true,
             'deleted' => false
         ]);
 
         return count($books);
+    }
+
+    /**
+     * @param BookRepository|MockObject $bookRepository
+     * @param string $searched
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getAllWithMatchingTitle(
+        BookRepository $bookRepository,
+        string $searched,
+        int $offset,
+        int $limit
+    ): array
+    {
+        return $bookRepository->getAllWithMatchingTitle(new RepositoryHelper(), $searched, $offset, $limit);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @param BookRepository|MockObject $bookRepository
+     * @param string $searched
+     *
+     * @return int
+     */
+    public function getNumberOfBooksWithMatchingTitle(
+        BookRepository $bookRepository,
+        string $searched
+    ): int
+    {
+        return $bookRepository->getNumberOfBooksWithMatchingTitle($searched);
     }
 }
