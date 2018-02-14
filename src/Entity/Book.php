@@ -23,17 +23,17 @@ class Book
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=500)
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=255)
      */
     private $cover_url;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $isbn;
 

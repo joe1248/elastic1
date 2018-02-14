@@ -23,18 +23,35 @@ class BookController extends Controller
         /** @var BookRepository $bookRepository */
         $bookRepository = $this->getDoctrine()->getRepository(Book::class);
 
-        return new JsonResponse(['books' => $bookService->getAllFeaturedAndNonDeleted($bookRepository)]);
+        $jsonResponse = new JsonResponse();
+        $jsonResponse->setEncodingOptions(JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT); // all but JSON_HEX_AMP
+        $jsonResponse->setData(['books' => $bookService->getAllFeaturedAndNonDeleted($bookRepository)]);
+
+        return $jsonResponse;
     }
 
     /**
      * Return one book by ID
      *
-     * @param Book $book
+     * @param string $id
+     * @param ControllerHelper $controllerHelper
      *
      * @return JsonResponse
      */
-    public function getOne(Book $book): JsonResponse
-    {   
-		return new JsonResponse($book->getAttributes());	
+    public function getOne(string $id, ControllerHelper $controllerHelper): JsonResponse
+    {
+        if (!is_numeric($id)) {
+            return $controllerHelper->getBadRequestJsonResponse('invalid value specified for `bookId`');
+        }
+
+        /** @var BookRepository $bookRepository */
+        $bookRepository = $this->getDoctrine()->getRepository(Book::class);
+        $book = $bookRepository->findOneBy(['id' => $id]);
+
+        if (!$book) {
+            return $controllerHelper->getBadRequestJsonResponse('book not found');
+        }
+
+		return new JsonResponse($book->getAttributes());
 	}
 }

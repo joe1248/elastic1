@@ -29,12 +29,26 @@ class AuthorController extends Controller
     /**
      * Return one author by ID
      *
-     * @param Author $author
+     * @param string $id
+     * @param ControllerHelper $controllerHelper
      *
      * @return JsonResponse
      */
-    public function getOne(Author $author): JsonResponse
+    public function getOne(string $id, ControllerHelper $controllerHelper): JsonResponse
     {
-		return new JsonResponse($author->getAttributes());	
-	}
+        if (!is_numeric($id)) {
+            return $controllerHelper->getBadRequestJsonResponse('invalid value specified for `authorId`');
+        }
+
+        /** @var AuthorRepository $authorRepository */
+        $authorRepository = $this->getDoctrine()->getRepository(Author::class);
+        $author = $authorRepository->findOneBy(['id' => $id]);
+
+        if (!$author) {
+            return $controllerHelper->getBadRequestJsonResponse('author not found');
+        }
+
+        return new JsonResponse($author->getAttributes());
+    }
+
 }
