@@ -45,14 +45,22 @@ class Publisher
         //$this->validate();
     }
 
-	/**
+    /**
      * @return array
      */
     public function getAttributes(): array
     {
-		return [
-			'id' => $this->id,
-			'name' => $this->name,
-		];
-	}
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
