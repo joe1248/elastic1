@@ -18,6 +18,9 @@ class PublisherService
         /** @var Publisher[] $publishers */
         $publishers = $publisherRepository->findBy(['deleted' => false]);
 
-        return array_map(function(Publisher $pub){return $pub->getAttributes();}, $publishers);
+        return array_map(
+            function(Publisher $publisher){return $publisher->getAttributes();},
+            $publishers
+        );
     }
 }

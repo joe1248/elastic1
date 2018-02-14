@@ -18,6 +18,9 @@ class AuthorService
         /** @var Author[] $authors */
         $authors = $authorRepository->findBy(['deleted' => false]);
 
-        return array_map(function(Author $pub){return $pub->getAttributes();}, $authors);
+        return array_map(
+            function(Author $author){return $author->getAttributes();},
+            $authors
+        );
     }
 }

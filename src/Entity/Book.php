@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="books")
- * @ORM\Entity(repositoryClass="App\Repository\bookRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  */
 class Book
 {
@@ -73,7 +73,7 @@ class Book
     public function __construct(array $input)
     {
         $this->id = $input['id'] ?? null;
-        $this->title = $input['id'] ?? null;
+        $this->title = $input['title'] ?? null;
         $this->description = $input['description'] ?? null;
         $this->cover_url =  $input['cover_url'] ?? null;
         $this->isbn =  $input['isbn'] ?? null;
@@ -82,5 +82,21 @@ class Book
         $this->publisher = $input['publisher'] ?? null;
         $this->author = $input['author'] ?? null;
         //$this->validate();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributes(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'cover_url' => $this->cover_url,
+            'isbn' => $this->isbn,
+            'publisher' => $this->publisher->getAttributes(),
+            'author' => $this->author->getAttributes(),
+        ];
     }
 }

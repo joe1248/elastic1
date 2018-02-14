@@ -2,6 +2,7 @@ index:
     path: /
     controller: App\Controller\DashboardController::dashboard
 
+
 # -----------  Publishers routes ----------------------------
 
 PublishersListRoute:
@@ -14,6 +15,7 @@ PublisherViewRoute:
     path: /publishers/{id}
     controller: App\Controller\PublisherController::getOne
 
+
 # -----------  Authors routes ----------------------------
 
 AuthorsListRoute:
@@ -25,3 +27,15 @@ AuthorViewRoute:
     methods: [GET]
     path: /authors/{id}
     controller: App\Controller\AuthorController::getOne
+
+# -----------  Books routes ----------------------------
+
+BooksHighligthedRoute:
+    methods: [GET]
+    path: /books/highlighted
+    controller: App\Controller\BookController::getAllFeatured
+
+BookViewRoute:
+    methods: [GET]
+    path: /books/{id}
+    controller: App\Controller\BookController::getOne

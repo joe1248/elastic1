@@ -23,7 +23,7 @@ class PublisherController extends Controller
         /** @var PublisherRepository $publisherRepository */
         $publisherRepository = $this->getDoctrine()->getRepository(Publisher::class);
 
-        return new JsonResponse($publisherService->getAllNonDeleted($publisherRepository));
+        return new JsonResponse(['publishers' => $publisherService->getAllNonDeleted($publisherRepository)]);
     }
 
     /**

@@ -23,7 +23,7 @@ class AuthorController extends Controller
         /** @var AuthorRepository $authorRepository */
         $authorRepository = $this->getDoctrine()->getRepository(Author::class);
 
-        return new JsonResponse($authorService->getAllNonDeleted($authorRepository));
+        return new JsonResponse(['authors' => $authorService->getAllNonDeleted($authorRepository)]);
     }
 
     /**
@@ -34,7 +34,7 @@ class AuthorController extends Controller
      * @return JsonResponse
      */
     public function getOne(Author $author): JsonResponse
-    {   
+    {
 		return new JsonResponse($author->getAttributes());	
 	}
 }
