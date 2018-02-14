@@ -19,8 +19,8 @@ class PublisherFixtures extends Fixture
             $publisher = new Publisher($publishersData[$i]);
 
             $manager->persist($publisher);
+            $manager->flush();
+            $this->addReference('publisher' . $publishersData[$i]['id'], $publisher);
         }
-
-        $manager->flush();
     }
 }

@@ -20,8 +20,8 @@ class AuthorFixtures extends Fixture
             $author = new author($authorsData[$i]);
 
             $manager->persist($author);
+            $manager->flush();
+            $this->addReference('author' . $authorsData[$i]['id'], $author);
         }
-
-        $manager->flush();
     }
 }

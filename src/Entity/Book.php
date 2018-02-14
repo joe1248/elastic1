@@ -18,7 +18,7 @@ class Book
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
+     * @ORM\Column(type="string", length=100)
      */
     private $title;
 
@@ -33,7 +33,7 @@ class Book
     private $cover_url;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, unique=true)
      */
     private $isbn;
 
@@ -77,10 +77,10 @@ class Book
         $this->description = $input['description'] ?? null;
         $this->cover_url =  $input['cover_url'] ?? null;
         $this->isbn =  $input['isbn'] ?? null;
-        $this->featured =  (bool) $input['featured'] ?? false;
-        $this->deleted =  (bool) $input['deleted'] ?? false;
-        $this->publisher = $input['publisher_id'] ?? null;
-        $this->author = $input['author_id'] ?? null;
+        $this->featured = $input['featured'] ?? false;
+        $this->deleted = $input['deleted'] ?? false;
+        $this->publisher = $input['publisher'] ?? null;
+        $this->author = $input['author'] ?? null;
         //$this->validate();
     }
 }
