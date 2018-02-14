@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-// @noinspection
+// this use statement is needed for the annotations
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,7 +33,7 @@ class Publisher
     private $deleted;
 
     /**
-     * Connection constructor.
+     * Publisher constructor.
      *
      * @param array $input
      */
@@ -41,8 +41,8 @@ class Publisher
     {
         $this->id = $input['id'] ?? null;
         $this->name = $input['name'] ?? null;
-        $this->deleted = $input['deleted'] ?? null;
-        //$this->validate(); Move this to entityHelper...
+        $this->deleted = $input['deleted'] ?? false;
+        //$this->validate();
     }
 
 	/**
@@ -56,4 +56,3 @@ class Publisher
 		];
 	}
 }
-
