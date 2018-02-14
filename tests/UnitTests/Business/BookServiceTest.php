@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class BookServiceTest extends TestCase
 {
-    public function testGetAllFeaturedAndNonDeleted()
+    public function testGetAllFeatured()
     {
         /** MockObject $bookRepositoryMock */
         $bookRepositoryMock = $this->getMockBuilder(BookRepository::class)
@@ -60,7 +60,7 @@ class BookServiceTest extends TestCase
 
         /** BookService $bookServiceToTest */
         $bookServiceToTest = new BookService();
-        $books = $bookServiceToTest->getAllFeaturedAndNonDeleted($bookRepositoryMock);
+        $books = $bookServiceToTest->getAllFeatured($bookRepositoryMock, 0 , 100);
         $this->assertEquals(
             [
                 [
@@ -84,5 +84,29 @@ class BookServiceTest extends TestCase
             ],
             $books
         );
+    }
+
+    public function testGetNumberOfBooksFeatured()
+    {
+        /** MockObject $bookRepositoryMock */
+        $bookRepositoryMock = $this->getMockBuilder(BookRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $bookRepositoryMock->expects($this->once())
+            ->method('findBy')
+            ->with($this->equalTo([
+                //'featured' => true,
+                'deleted' => false
+            ]))
+            ->willReturn([
+                new Book(['id' => 1]),
+                new Book(['id' => 2])
+            ]);
+
+        /** BookService $bookServiceToTest */
+        $bookServiceToTest = new BookService();
+        $numberOfBooks = $bookServiceToTest->getNumberOfBooksFeatured($bookRepositoryMock);
+        $this->assertEquals(2, $numberOfBooks);
     }
 }

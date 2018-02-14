@@ -42,7 +42,7 @@ class AuthorController extends Controller
 
         /** @var AuthorRepository $authorRepository */
         $authorRepository = $this->getDoctrine()->getRepository(Author::class);
-        $author = $authorRepository->findOneBy(['id' => $id]);
+        $author = $authorRepository->find($id);
 
         if (!$author) {
             return $controllerHelper->getBadRequestJsonResponse('author not found');
@@ -50,5 +50,4 @@ class AuthorController extends Controller
 
         return new JsonResponse($author->getAttributes());
     }
-
 }

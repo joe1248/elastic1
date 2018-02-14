@@ -11,21 +11,54 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BookController extends Controller
 {
+    const MAX_LIMIT_NUMBER_OF_FEATURED_BOOKS = 100;
+
     /**
-     * List all books highlighted/featured non-deleted
+     * List all books highlighted/featured
      *
+     * @param int $offset
+     * @param int $limit
      * @param BookService $bookService
+     * @param ControllerHelper $controllerHelper
      *
      * @return JsonResponse
      */
-    public function getAllFeatured(BookService $bookService): JsonResponse
+    public function getAllFeatured(
+        int $offset,
+        int $limit,
+        BookService $bookService,
+        ControllerHelper $controllerHelper
+    ): JsonResponse
     {
+        if (!is_numeric($offset)) {
+            return $controllerHelper->getBadRequestJsonResponse('invalid value specified for `offset`');
+        }
+        if (!is_numeric($limit)) {
+            return $controllerHelper->getBadRequestJsonResponse('invalid value specified for `limit`');
+        }
+        if ($offset < 0) {
+            return $controllerHelper->getBadRequestJsonResponse(
+                'Invalid value specified for `offset`. Minimum required value is 0.'
+            );
+        }
+        if ($limit > self::MAX_LIMIT_NUMBER_OF_FEATURED_BOOKS) {
+            return $controllerHelper->getBadRequestJsonResponse(
+                'Invalid value specified for `limit`. ' .
+                'Maximum allowed value is ' . self::MAX_LIMIT_NUMBER_OF_FEATURED_BOOKS . '.'
+            );
+        }
+
         /** @var BookRepository $bookRepository */
         $bookRepository = $this->getDoctrine()->getRepository(Book::class);
 
         $jsonResponse = new JsonResponse();
         $jsonResponse->setEncodingOptions(JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT); // all but JSON_HEX_AMP
-        $jsonResponse->setData(['books' => $bookService->getAllFeaturedAndNonDeleted($bookRepository)]);
+        $jsonResponse->setData([
+            'books' => $bookService->getAllFeatured($bookRepository, $offset, $limit),
+            'offset' => $offset,
+            'limit' => $limit,
+            'total' => $bookService->getNumberOfBooksFeatured($bookRepository),
+        ]);
 
         return $jsonResponse;
     }
@@ -46,7 +79,7 @@ class BookController extends Controller
 
         /** @var BookRepository $bookRepository */
         $bookRepository = $this->getDoctrine()->getRepository(Book::class);
-        $book = $bookRepository->findOneBy(['id' => $id]);
+        $book = $bookRepository->find($id);
 
         if (!$book) {
             return $controllerHelper->getBadRequestJsonResponse('book not found');

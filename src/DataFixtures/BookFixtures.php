@@ -31,6 +31,7 @@ class BookFixtures extends Fixture implements FixtureInterface, DependentFixture
 
         for ($i = 0; $i < count($allBooks); $i++) {
             $bookData = $allBooks[$i];
+            $bookData['featured'] = true;
             $bookData['author'] = $this->getReference('author' . $bookData['author']['id']);
             $bookData['publisher'] = $this->getReference('publisher' . $bookData['publisher']['id']);
 

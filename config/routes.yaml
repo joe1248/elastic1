@@ -1,4 +1,4 @@
-index:
+DashboardRoute:
     path: /
     controller: App\Controller\DashboardController::dashboard
 
@@ -32,8 +32,9 @@ AuthorViewRoute:
 
 BooksHighligthedRoute:
     methods: [GET]
-    path: /books/highlighted
+    path: /books/highlighted/{offset}/{limit}
     controller: App\Controller\BookController::getAllFeatured
+    defaults:   { offset: 0, limit: 50 }
 
 BookViewRoute:
     methods: [GET]

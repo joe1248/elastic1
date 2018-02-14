@@ -42,7 +42,7 @@ class PublisherController extends Controller
 
         /** @var PublisherRepository $publisherRepository */
         $publisherRepository = $this->getDoctrine()->getRepository(Publisher::class);
-        $publisher = $publisherRepository->findOneBy(['id' => $id]);
+        $publisher = $publisherRepository->find($id);
 
         if (!$publisher) {
             return $controllerHelper->getBadRequestJsonResponse('publisher not found');
