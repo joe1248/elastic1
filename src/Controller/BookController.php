@@ -24,8 +24,8 @@ class BookController extends Controller
      * @return JsonResponse
      */
     public function getAllFeatured(
-        int $offset,
-        int $limit,
+        string $offset,
+        string $limit,
         BookService $bookService,
         ControllerHelper $controllerHelper
     ): JsonResponse

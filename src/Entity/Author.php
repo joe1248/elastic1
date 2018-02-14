@@ -57,4 +57,12 @@ class Author
             'last_name' => $this->last_name,
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

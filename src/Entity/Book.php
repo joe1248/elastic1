@@ -99,4 +99,12 @@ class Book
             'author' => $this->author->getAttributes(),
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

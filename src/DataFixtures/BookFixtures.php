@@ -38,8 +38,8 @@ class BookFixtures extends Fixture implements FixtureInterface, DependentFixture
             $book = new book($bookData);
 
             $manager->persist($book);
+            $manager->flush();
+            $this->addReference('book' . $bookData['id'], $book);
         }
-
-        $manager->flush();
     }
 }
