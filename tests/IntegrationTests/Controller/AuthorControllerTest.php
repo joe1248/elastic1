@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\AuthorFixtures;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class AuthorControllerTest extends WebTestCase
@@ -15,6 +16,9 @@ class AuthorControllerTest extends WebTestCase
 
     public function setUp()
     {
+        $cache = new FilesystemAdapter();
+        $cache->clear();
+
         $this->fixtures = $this->loadFixtures(
             [
                 AuthorFixtures::class,
@@ -25,10 +29,17 @@ class AuthorControllerTest extends WebTestCase
     public function testGetAll()
     {
         $client = $this->makeClient(true);
-        $client->request('GET', '/authors/list');
 
+        $client->request('GET', '/authors/list');
+        $this->assertStatusCode(200, $client);
+        $dataNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/authors/list');
         $this->assertStatusCode(200, $client);
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($dataNotCached, $data);
+
         $authors = $data['authors'];
         $this->assertEquals(120, count($authors));
 
@@ -56,10 +67,16 @@ class AuthorControllerTest extends WebTestCase
         $id5 = $this->fixtures->getReference('author5')->getId();
 
         $client = $this->makeClient(true);
-        $client->request('GET', '/authors/' . $id5);
 
+        $client->request('GET', '/authors/' . $id5);
+        $this->assertStatusCode(200, $client);
+        $authorNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/authors/' . $id5);
         $this->assertStatusCode(200, $client);
         $author = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($authorNotCached, $author);
 
         $this->assertEquals(
             [

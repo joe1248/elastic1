@@ -9,8 +9,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production",
-        "test": "./bin/phpunit --stop-on-failure --test-suite=all",
-        "test-fast": "./bin/phpunit --stop-on-failure --testsuite=unit  --whitelist=src/ --coverage-text=tests/reports/unitTestsCoverage.txt",
+        "test": "./bin/phpunit --stop-on-failure --testsuite=all",
+        "test-unit": "./bin/phpunit --stop-on-failure --testsuite=unit  --whitelist=src/ --coverage-text=tests/reports/unitTestsCoverage.txt",
         "test-slow": "./bin/phpunit --stop-on-failure --testsuite=integration --whitelist=src/Controller/ --coverage-text=tests/reports/integrationTestsCoverage.txt",
         "test-dev": "./bin/phpunit --stop-on-failure ./tests/IntegrationTests/Controller/BookControllerTest.php"
     }

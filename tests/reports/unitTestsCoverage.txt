@@ -1,17 +1,17 @@
 
 
 Code Coverage Report:     
-  2018-02-14 23:47:41     
+  2018-02-15 01:50:16     
                           
  Summary:                 
   Classes: 33.33% (6/18)  
-  Methods: 37.84% (14/37) 
-  Lines:   18.28% (51/279)
+  Methods: 39.47% (15/38) 
+  Lines:   16.10% (52/323)
 
 \App\Business::App\Business\AuthorService
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
 \App\Business::App\Business\BookService
-  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 10/ 10)
+  Methods: 100.00% ( 4/ 4)   Lines: 100.00% ( 11/ 11)
 \App\Business::App\Business\PublisherService
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
 \App\Entity::App\Entity\Author

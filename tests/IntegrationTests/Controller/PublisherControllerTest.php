@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\PublisherFixtures;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class PublisherControllerTest extends WebTestCase
@@ -15,6 +16,9 @@ class PublisherControllerTest extends WebTestCase
 
     public function setUp()
     {
+        $cache = new FilesystemAdapter();
+        $cache->clear();
+
         $this->fixtures = $this->loadFixtures(
             [
                 PublisherFixtures::class,
@@ -25,10 +29,17 @@ class PublisherControllerTest extends WebTestCase
     public function testGetAll()
     {
         $client = $this->makeClient(true);
-        $client->request('GET', '/publishers/list');
 
+        $client->request('GET', '/publishers/list');
+        $this->assertStatusCode(200, $client);
+        $dataNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/publishers/list');
         $this->assertStatusCode(200, $client);
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($dataNotCached, $data);
+
         $publishers = $data['publishers'];
         $this->assertEquals(20, count($publishers));
 
@@ -54,10 +65,16 @@ class PublisherControllerTest extends WebTestCase
         $id5 = $this->fixtures->getReference('publisher5')->getId();
 
         $client = $this->makeClient(true);
-        $client->request('GET', '/publishers/' . $id5);
 
+        $client->request('GET', '/publishers/' . $id5);
+        $this->assertStatusCode(200, $client);
+        $publisherNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/publishers/' . $id5);
         $this->assertStatusCode(200, $client);
         $publisher = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($publisherNotCached, $publisher);
 
         $this->assertEquals(
             [

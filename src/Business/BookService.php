@@ -24,9 +24,9 @@ class BookService
     {
         /** @var Book[] $books */
         $books = $bookRepository->findBy([
-            'featured' => true,
-            'deleted' => false
-        ],
+                'featured' => true,
+                'deleted' => false
+            ],
             null,
             $limit,
             $offset
@@ -73,7 +73,6 @@ class BookService
     }
 
     /**
-     * @codeCoverageIgnore
      * @param BookRepository|MockObject $bookRepository
      * @param string $searched
      *

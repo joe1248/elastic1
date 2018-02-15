@@ -1,18 +1,20 @@
 
 
-Code Coverage Report:    
-  2018-02-15 00:19:04    
-                         
- Summary:                
-  Classes: 80.00% (4/5)  
-  Methods: 88.89% (8/9)  
-  Lines:   92.96% (66/71)
+Code Coverage Report:       
+  2018-02-15 03:50:33       
+                            
+ Summary:                   
+  Classes: 100.00% (5/5)    
+  Methods: 100.00% (9/9)    
+  Lines:   100.00% (129/129)
 
 \App\Controller::App\Controller\AuthorController
-  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  9/  9)
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 24/ 24)
 \App\Controller::App\Controller\BookController
-  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 45/ 45)
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 78/ 78)
 \App\Controller::App\Controller\ControllerHelper
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
+\App\Controller::App\Controller\PageNotFoundController
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
 \App\Controller::App\Controller\PublisherController
-  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  9/  9)
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 23/ 23)

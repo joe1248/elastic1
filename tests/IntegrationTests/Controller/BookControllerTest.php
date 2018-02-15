@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\DataFixtures\BookFixtures;
 use Doctrine\Common\DataFixtures\ReferenceRepository;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class BookControllerTest extends WebTestCase
@@ -15,6 +16,9 @@ class BookControllerTest extends WebTestCase
 
     public function setUp()
     {
+        $cache = new FilesystemAdapter();
+        $cache->clear();
+
         $this->fixtures = $this->loadFixtures(
             [
                 BookFixtures::class,
@@ -28,7 +32,15 @@ class BookControllerTest extends WebTestCase
         $client->request('GET', '/books/highlighted');
 
         $this->assertStatusCode(200, $client);
+        $dataNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/books/highlighted');
+
+        $this->assertStatusCode(200, $client);
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($dataNotCached, $data);
+
         $this->assertEquals(0, $data['offset']);
         $this->assertEquals(50, $data['limit']);
         $this->assertEquals(101, $data['total']);
@@ -222,10 +234,16 @@ class BookControllerTest extends WebTestCase
         $id5 = $this->fixtures->getReference('book5')->getId();
 
         $client = $this->makeClient(true);
-        $client->request('GET', '/books/' . $id5);
 
+        $client->request('GET', '/books/' . $id5);
+        $this->assertStatusCode(200, $client);
+        $bookNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/books/' . $id5);
         $this->assertStatusCode(200, $client);
         $book = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($bookNotCached, $book);
 
         $this->assertEquals(
             [
@@ -324,10 +342,17 @@ class BookControllerTest extends WebTestCase
     public function testSearchByTitleWorksWithLimitAndOffset()
     {
         $client = $this->makeClient(true);
-        $client->request('GET', '/books/search/io/5/7');
 
+        $client->request('GET', '/books/search/io/5/7');
+        $this->assertStatusCode(200, $client);
+        $dataNotCached = json_decode($client->getResponse()->getContent(), true);
+
+        $client->request('GET', '/books/search/io/5/7');
         $this->assertStatusCode(200, $client);
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($dataNotCached, $data);
+
         $this->assertEquals(5, $data['offset']);
         $this->assertEquals(7, $data['limit']);
         $this->assertEquals(14, $data['total']);
