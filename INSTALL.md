@@ -1,3 +1,8 @@
+# manually run the unit-tests
+    ## Get inside the apache server 
+winpty docker exec -ti  elastic1_elastic_web_server_1 bash
+npm run test    
+
 # Install Docker and Docker-compose on clean ubuntu:
 
 ###add the new gpg key
@@ -22,12 +27,14 @@ mv html old_html
 git clone https://github.com/joe1248/elastic1.git
 mv elastic1 html
 
+## NB : unless using DockerSecret
+touch .env
+vi .env     Then Paste the content of the locale .env inside the docker one!
+
 # Build and launch
 docker build -t elastic_image .
 docker-compose up --build
 
-# Get inside the apache server 
-winpty docker exec -ti  elastic1_elastic_web_server_1 bash
 
 
 # Prepare DB
