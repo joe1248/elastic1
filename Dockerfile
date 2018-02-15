@@ -59,12 +59,10 @@ COPY webpack.config.js ./
 #RUN npm run dev
 
 # STEP 8: copy confs...
-    # copy PHP ini file to configure PHP
-COPY docker/php.ini /usr/local/etc/php/conf.d/
     # copy HTTPD.conf ini file to configure Apache
 COPY docker/httpd.conf /etc/apache2/sites-enabled/000-default.conf
-    # copy default ENV var
-#COPY .env.dist ./.env
+    # copy PHP ini file to configure PHP
+COPY docker/php.ini /usr/local/etc/php/conf.d/
 
 # Including apache expires module
 #RUN ln -s /etc/apache2/mods-available/expires.load /etc/apache2/mods-enabled/
@@ -75,13 +73,14 @@ RUN a2enmod headers
 RUN a2enmod rewrite
 
 
-
 # STEP 8 : Copy the App
 COPY . ./
+
 
 # STEP 9: generate autoloader MUST BE DONE AFTER COPYING THE APP
 RUN composer dump-autoload --optimize
 
+#RUN mkdir ./public/build
 #RUN echo '<?php phpinfo();' > ./public/build/index.php
 
 EXPOSE 80 443
