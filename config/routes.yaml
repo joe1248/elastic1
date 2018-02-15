@@ -1,10 +1,4 @@
-DashboardRoute:
-    path: /
-    controller: App\Controller\DashboardController::dashboard
-
-
 # -----------  Publishers routes ----------------------------
-
 PublishersListRoute:
     methods: [GET]
     path: /publishers/list
@@ -15,9 +9,7 @@ PublisherViewRoute:
     path: /publishers/{id}
     controller: App\Controller\PublisherController::getOne
 
-
 # -----------  Authors routes ----------------------------
-
 AuthorsListRoute:
     methods: [GET]
     path: /authors/list
@@ -29,12 +21,11 @@ AuthorViewRoute:
     controller: App\Controller\AuthorController::getOne
 
 # -----------  Books routes ----------------------------
-
 BooksHighlightedRoute:
     methods: [GET]
     path: /books/highlighted/{offset}/{limit}
     controller: App\Controller\BookController::getAllFeatured
-    defaults:   { offset: 0, limit: 50 }
+    defaults: { offset: 0, limit: 50 }
 
 BookViewRoute:
     methods: [GET]
@@ -42,8 +33,14 @@ BookViewRoute:
     controller: App\Controller\BookController::getOne
 
 BooksSearchRoute:
-    methods: [GET]
-    path: /books/search/{searched}/{offset}/{limit}
+    methods:    [GET]
+    path:       /books/search/{searched}/{offset}/{limit}
     controller: App\Controller\BookController::searchByTitle
-    defaults:   { offset: 0, limit: 50 }
+    defaults: { offset: 0, limit: 50 }
 
+# -----------  PageNotFound: any others routes (including /)-------------
+PageNotFoundRoute:
+    path: /{req}
+    controller: App\Controller\PageNotFoundController::getPageNotFound
+    requirements:
+        req: ".*"
