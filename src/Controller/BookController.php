@@ -22,7 +22,6 @@ class BookController extends Controller
      * @param BookService $bookService
      * @param ControllerHelper $controllerHelper
      *
-     * @param FilesystemAdapter $cache
      * @return JsonResponse
      *
      * @throws \Psr\Cache\InvalidArgumentException

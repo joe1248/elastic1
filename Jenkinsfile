@@ -6,17 +6,13 @@ pipeline {
   }
   stages {
     stage('Build') {
-      stage('Composer') {
-        steps {
-          sh 'composer install'
-        }
+      steps {
+        sh 'composer install'
       }
     }
     stage('Test') {
-      stage('Unit + Integration') {
-        steps {
-          sh 'npm run test'
-        }
+      steps {
+        sh 'npm run test'
       }
     }
   }
